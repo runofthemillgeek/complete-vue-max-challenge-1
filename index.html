@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Challenge 1</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <main id="app">
+        <div class="container">
+            <div class="player-card-container">
+                <div class="player-card">
+                    <h2 class="player-card__title">Player</h2>
+                    <div class="health-bar">
+                        <div class="health-bar__remaining"
+                            :style="{ width: playerHealthBarWidth }">
+                            <div class="health-bar__text">{{ playerHealthBarWidth }}</div>
+                        </div>
+                    </div>
+                    <div class="player-card__controls controls" v-if="isPlaying">
+                        <button class="control control--danger" type="button" @click="onPlayerAttack()">Attack</button> 
+                        <button class="control control--success" type="button" @click="onPlayerHeal()">Heal</button> 
+                        <button class="control control--primary" type="button" @click="onPlayerSpecial()">Special</button> 
+                    </div>
+                </div>
+                <div class="player-card">
+                    <h2 class="player-card__title">Computer</h2>
+                    <div class="health-bar">
+                        <div class="health-bar__remaining"
+                        :style="{ width: this.computerHealthBarWidth }">
+                            <div class="health-bar__text">{{ this.computerHealthBarWidth }}</div>
+                        </div>
+                    </div>
+                    <!-- <div class="player-card__controls">
+                        <button class="control control--danger" type="button">Attack</button> 
+                        <button class="control control--success" type="button">Heal</button> 
+                        <button class="control control--primary" type="button">Special</button> 
+                    </div> -->
+                </div>
+            </div>
+
+            <div class="game-info" v-if="!isPlaying">{{ this.gameInfo }}</div>
+
+            <div class="game-settings">
+                <button type="button" class="control control--primary" @click="onPlay" v-if="!isPlaying && !isGameEndStatsShown">Play</button>
+                <button type="button" class="control control--primary" @click="onReset" v-if="isPlaying || isGameEndStatsShown">Reset</button>
+            </div>
+
+            <ul class="game-log" v-if="log.length > 0">
+               <li v-for="(entry, key) in log" :key="key"
+                    class="game-log__entry" :class="[`game-log__entry--${entry.player}`]">
+                   {{ entry.content }}
+               </li> 
+            </ul>
+
+            <footer class="app-footer">
+                Made with 💖 by Sangeeth
+            </footer>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script src="script.js"></script>
+</body>
+</html>
